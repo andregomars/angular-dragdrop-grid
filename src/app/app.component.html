@@ -1,0 +1,37 @@
+<h1>Drag&Drop with a flex-wrap</h1>
+
+<button (click)="add()">Add</button>
+<button (click)="shuffle()">Shuffle</button>
+<button (click)="toggleDragDrop()">
+  {{ isDragEnabled ? 'Disable' : 'Enable' }} Drag & Drop
+</button>
+
+<br />
+<ul class="example-list">
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
+
+<div class="example-container" cdkDropListGroup>
+  <div
+    *ngIf="isDragEnabled"
+    cdkDropList
+    [cdkDropListEnterPredicate]="dropListEnterPredicate"
+    (cdkDropListDropped)="dropListDropped($event)"
+  ></div>
+  <div
+    cdkDropList
+    *ngFor="let item of items"
+    [cdkDropListEnterPredicate]="dropListEnterPredicate"
+    (cdkDropListDropped)="dropListDropped($event)"
+  >
+    <div
+      *ngIf="isDragEnabled"
+      cdkDrag
+      class="example-box"
+      (cdkDragMoved)="dragMoved($event)"
+    >
+      {{ item }}
+    </div>
+    <div *ngIf="!isDragEnabled" class="example-box">{{ item }}</div>
+  </div>
+</div>
